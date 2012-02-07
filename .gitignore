@@ -1,0 +1,11 @@
+
+#Working Dir
+objs/
+lib/
+
+#TARGET
+TDD4EC_CppUTest_tests
+
+#SettingFile
+.*.swp
+.DS_Store
