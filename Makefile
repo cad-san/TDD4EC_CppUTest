@@ -1,40 +1,23 @@
-#This makefile makes all the main book code with CppUTest test harness
+# this is set up to by default to make the top level and test with CppUTest
+all: codeCppUTest
 
-#Set this to @ to keep the makefile quiet
-SILENCE = @
+clean: cleanCodeCppUTest
 
-#---- Outputs ----#
-COMPONENT_NAME = TDD4EC_CppUTest
+cleanCode: cleanCodeCppUTest 
 
-#--- Inputs ----#
-CPPUTEST_HOME = CppUTest
-CPP_PLATFORM = Gcc
-PROJECT_HOME_DIR = .
+codeCppUTest: CppUTest CppUTestExt
+	make -i -f MakefileCppUTest.mk 
 
-SRC_DIRS = \
-	src/util\
-	src/LedDriver
-
-TEST_SRC_DIRS = \
-	.\
-	tests\
-	tests/stdio\
-
+cleanCodeCppUTest:
+	make -i -f MakefileCppUTest.mk clean
 	
-INCLUDE_DIRS =\
-  .\
-  $(CPPUTEST_HOME)/include\
-  include/LedDriver\
-  include/util\
-  mocks\
+CppUTest: CppUTest/lib/libCppUTest.a
 
-MOCKS_SRC_DIRS = \
-	
-CPPUTEST_WARNINGFLAGS = -Wall -Wswitch-default -Werror 
-#CPPUTEST_CFLAGS = -std=c89 
-CPPUTEST_CFLAGS += -Wall -Wstrict-prototypes -pedantic
-LD_LIBRARIES = -lpthread
-	
-  
-include $(CPPUTEST_HOME)/build/MakefileWorker.mk
+CppUTestExt: CppUTest/lib/libCppUTestExt.a
 
+CppUTest/lib/libCppUTest.a:
+	pwd
+	make -i -C CppUTest
+
+CppUTest/lib/libCppUTestExt.a:
+	make -i -C CppUTest extensions
