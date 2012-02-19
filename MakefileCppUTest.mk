@@ -25,7 +25,6 @@ INCLUDE_DIRS =\
   .\
   $(CPPUTEST_HOME)/include\
   include/LedDriver\
-  include/util\
   mocks\
 
 MOCKS_SRC_DIRS = \
