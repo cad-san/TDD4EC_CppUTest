@@ -25,6 +25,7 @@ TEST_SRC_DIRS = \
 INCLUDE_DIRS =\
   .\
   $(CPPUTEST_HOME)/include\
+  include/HomeAutomation\
   include/LedDriver\
   mocks\
 
