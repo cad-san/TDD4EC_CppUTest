@@ -18,7 +18,8 @@ SRC_DIRS = \
 TEST_SRC_DIRS = \
 	.\
 	tests\
-	tests/stdio\
+	tests/HomeAutomation
+#	tests/stdio\
 
 	
 INCLUDE_DIRS =\
