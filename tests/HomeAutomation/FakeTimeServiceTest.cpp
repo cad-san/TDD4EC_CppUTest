@@ -26,3 +26,15 @@ TEST(FakeTimeService, Create)
     LONGS_EQUAL(TIME_UNKNOWN, time.minuteOfDay);
     LONGS_EQUAL(TIME_UNKNOWN, time.dayOfWeek);
 }
+
+TEST(FakeTimeService, Set)
+{
+    Time time;
+    FakeTimeService_SetMinute(42);
+    FakeTimeService_SetDay(SATUADAY);
+
+    TimeService_GetTime(&time);
+
+    LONGS_EQUAL(42, time.minuteOfDay);
+    LONGS_EQUAL(SATUADAY, time.dayOfWeek);
+}

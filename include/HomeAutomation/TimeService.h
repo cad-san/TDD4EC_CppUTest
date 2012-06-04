@@ -7,6 +7,11 @@ typedef struct Time
     int dayOfWeek;
 } Time;
 
+typedef enum {
+    NONE = -1, EVERYDAY = 10, WEEKDAY, WEEKEND,
+    SUNDAY = 1, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATUADAY
+} Day;
+
 void TimeService_Create(void);
 void TimeService_Destory(void);
 void TimeService_GetTime(Time *time);
