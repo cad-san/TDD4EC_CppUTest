@@ -13,7 +13,8 @@ PROJECT_HOME_DIR = .
 
 SRC_DIRS = \
 	src/util\
-	src/LedDriver
+	src/LedDriver\
+	src/HomeAutomation
 
 TEST_SRC_DIRS = \
 	.\
