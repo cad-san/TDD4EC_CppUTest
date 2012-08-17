@@ -37,9 +37,7 @@ TEST_GROUP(LightScheduler)
 TEST(LightScheduler, NoScheduleNothingHappens)
 {
     setTimeTo(MONDAY, 100);
-
     LightScheduler_Wakeup();
-
     checkLightState(LIGHT_ID_UNKNOWN, LIGHT_STATE_UNKNOWN);
 }
 
@@ -47,29 +45,71 @@ TEST(LightScheduler, ScheduleOnEverydayNotTimeYet)
 {
     LightScheduler_ScheduleTurnOn(3, EVERYDAY, 1200);
     setTimeTo(MONDAY, 1199);
-
     LightScheduler_Wakeup();
-
     checkLightState(LIGHT_ID_UNKNOWN, LIGHT_STATE_UNKNOWN);
 }
 
-TEST(LightScheduler,SchedukeOnEverydayItsTime)
+TEST(LightScheduler, ScheduleOnEverydayItsTime)
 {
     LightScheduler_ScheduleTurnOn(3, EVERYDAY, 1200);
     setTimeTo(MONDAY, 1200);
-
     LightScheduler_Wakeup();
-
     checkLightState(3, LIGHT_ON);
 }
 
-TEST(LightScheduler,SchedukeOffEverydayItsTime)
+TEST(LightScheduler, ScheduleOffEverydayItsTime)
 {
     LightScheduler_ScheduleTurnOff(3, EVERYDAY, 1200);
     setTimeTo(MONDAY, 1200);
-
     LightScheduler_Wakeup();
-
     checkLightState(3, LIGHT_OFF);
+}
+
+TEST(LightScheduler, ScheduleTuesDayButItsMonday)
+{
+    LightScheduler_ScheduleTurnOn(3, TUESDAY, 1200);
+    setTimeTo(MONDAY, 1200);
+    LightScheduler_Wakeup();
+    checkLightState(LIGHT_ID_UNKNOWN, LIGHT_STATE_UNKNOWN);
+}
+
+TEST(LightScheduler, ScheduleTuesDayAndItsTuesday)
+{
+    LightScheduler_ScheduleTurnOn(3, TUESDAY, 1200);
+    setTimeTo(TUESDAY, 1200);
+    LightScheduler_Wakeup();
+    checkLightState(3, LIGHT_ON);
+}
+
+TEST(LightScheduler, ScheduleWeekEndItsFriday)
+{
+    LightScheduler_ScheduleTurnOn(3, WEEKEND, 1200);
+    setTimeTo(FRIDAY, 1200);
+    LightScheduler_Wakeup();
+    checkLightState(LIGHT_ID_UNKNOWN, LIGHT_STATE_UNKNOWN);
+}
+
+TEST(LightScheduler, ScheduleWeekEndItsSaturday)
+{
+    LightScheduler_ScheduleTurnOn(3, WEEKEND, 1200);
+    setTimeTo(SATUADAY, 1200);
+    LightScheduler_Wakeup();
+    checkLightState(3, LIGHT_ON);
+}
+
+TEST(LightScheduler, ScheduleWeekEndItsSunday)
+{
+    LightScheduler_ScheduleTurnOn(3, WEEKEND, 1200);
+    setTimeTo(SUNDAY, 1200);
+    LightScheduler_Wakeup();
+    checkLightState(3, LIGHT_ON);
+}
+
+TEST(LightScheduler, ScheduleWeekEndItsMonday)
+{
+    LightScheduler_ScheduleTurnOn(3, WEEKEND, 1200);
+    setTimeTo(TUESDAY, 1200);
+    LightScheduler_Wakeup();
+    checkLightState(LIGHT_ID_UNKNOWN, LIGHT_STATE_UNKNOWN);
 }
 
