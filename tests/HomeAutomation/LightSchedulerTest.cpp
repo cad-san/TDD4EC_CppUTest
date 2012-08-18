@@ -29,8 +29,14 @@ TEST_GROUP(LightScheduler)
 
     void checkLightState(int id, int level)
     {
-        LONGS_EQUAL(id, LightControllerSpy_GetLastId());
-        LONGS_EQUAL(level, LightControllerSpy_GetLastState());
+        if (id == LIGHT_ID_UNKNOWN)
+        {
+            LONGS_EQUAL(id, LightControllerSpy_GetLastId());
+            LONGS_EQUAL(level, LightControllerSpy_GetLastState());
+
+        }
+        else
+            LONGS_EQUAL(level, LightControllerSpy_GetLightState(id));
     }
 };
 
@@ -111,6 +117,78 @@ TEST(LightScheduler, ScheduleWeekEndItsMonday)
     setTimeTo(TUESDAY, 1200);
     LightScheduler_Wakeup();
     checkLightState(LIGHT_ID_UNKNOWN, LIGHT_STATE_UNKNOWN);
+}
+
+TEST(LightScheduler, ScheduleTwoEventsAtTheSameTime)
+{
+    LightScheduler_ScheduleTurnOn(3, SUNDAY, 1200);
+    LightScheduler_ScheduleTurnOn(12, SUNDAY, 1200);
+
+    setTimeTo(SUNDAY, 1200);
+
+    LightScheduler_Wakeup();
+
+    checkLightState(3, LIGHT_ON);
+    checkLightState(12, LIGHT_ON);
+}
+
+TEST(LightScheduler, RejectTooManyEvents)
+{
+    int i;
+    for (i = 0; i < 128; i++)
+        LONGS_EQUAL(LS_OK,
+                LightScheduler_ScheduleTurnOn(6, MONDAY, 600+i));
+
+    LONGS_EQUAL(LS_TOO_MANY_EVENTS,
+            LightScheduler_ScheduleTurnOn(6, MONDAY, 600+i));
+}
+
+TEST(LightScheduler, RemoveRecyclesScheduleSlot)
+{
+    int i;
+    for (i = 0; i < 128; i++)
+        LONGS_EQUAL(LS_OK,
+                LightScheduler_ScheduleTurnOn(6, MONDAY, 600+i));
+
+    LightScheduler_ScheduleRemove(6, MONDAY, 600);
+
+    LONGS_EQUAL(LS_OK,
+            LightScheduler_ScheduleTurnOn(6, MONDAY, 600+i));
+}
+
+TEST(LightScheduler, RemoveMultipleScheduledEvent)
+{
+    LightScheduler_ScheduleTurnOn(6, MONDAY, 600);
+    LightScheduler_ScheduleTurnOn(7, MONDAY, 600);
+
+    LightScheduler_ScheduleRemove(6, MONDAY, 600);
+
+    setTimeTo(MONDAY, 600);
+
+    LightScheduler_Wakeup();
+
+    checkLightState(6, LIGHT_STATE_UNKNOWN);
+    checkLightState(7, LIGHT_ON);
+}
+
+TEST(LightScheduler, AcceptValidLightIds)
+{
+    LONGS_EQUAL(LS_OK,
+            LightScheduler_ScheduleTurnOn(0, MONDAY, 600));
+
+    LONGS_EQUAL(LS_OK,
+            LightScheduler_ScheduleTurnOn(15, MONDAY, 600));
+
+    LONGS_EQUAL(LS_OK,
+            LightScheduler_ScheduleTurnOn(31, MONDAY, 600));
+}
+
+TEST(LightScheduler, RejectInvalidLightIds)
+{
+    LONGS_EQUAL(LS_ID_OUT_OF_BOUNDS,
+            LightScheduler_ScheduleTurnOn(-1, MONDAY, 600));
+    LONGS_EQUAL(LS_ID_OUT_OF_BOUNDS,
+            LightScheduler_ScheduleTurnOn(32, MONDAY, 600));
 }
 
 TEST_GROUP(LightSchedulerInitAndCleanup)
