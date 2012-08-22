@@ -4,7 +4,7 @@ objs/
 lib/
 
 #TARGET
-TDD4EC_CppUTest_tests
+*_tests
 *.exe
 
 #SettingFile
