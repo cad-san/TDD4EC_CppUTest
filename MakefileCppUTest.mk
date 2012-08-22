@@ -14,7 +14,8 @@ PROJECT_HOME_DIR = .
 SRC_DIRS = \
 	src/util\
 	src/LedDriver\
-	src/HomeAutomation
+	src/HomeAutomation\
+	src/HomeAutomation/devices
 
 TEST_SRC_DIRS = \
 	.\
@@ -24,11 +25,12 @@ TEST_SRC_DIRS = \
 
 	
 INCLUDE_DIRS =\
-  .\
-  $(CPPUTEST_HOME)/include\
-  include/HomeAutomation\
-  include/LedDriver\
-  mocks\
+	.\
+	$(CPPUTEST_HOME)/include\
+	include/HomeAutomation\
+	include/HomeAutomation/devices\
+	include/LedDriver\
+	mocks\
 
 MOCKS_SRC_DIRS = \
 	
