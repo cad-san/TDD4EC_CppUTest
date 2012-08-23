@@ -33,6 +33,8 @@ INCLUDE_DIRS =\
 	mocks\
 
 MOCKS_SRC_DIRS = \
+	mocks\
+	mocks/HomeAutomation\
 	
 CPPUTEST_WARNINGFLAGS = -Wall -Wswitch-default -Werror 
 #CPPUTEST_CFLAGS = -std=c89 
