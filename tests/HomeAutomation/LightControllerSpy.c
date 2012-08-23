@@ -23,7 +23,7 @@ static int isIdInRange(int id)
     return id >= 0 && id <= MAX_LIGHTS - 1;
 }
 
-void LightController_On(int id)
+void LightController_TurnOn(int id)
 {
     lastId = id;
     lastState = LIGHT_ON;
@@ -32,7 +32,7 @@ void LightController_On(int id)
         lights[id] = LIGHT_ON;
 }
 
-void LightController_Off(int id)
+void LightController_TurnOff(int id)
 {
     lastId = id;
     lastState = LIGHT_OFF;

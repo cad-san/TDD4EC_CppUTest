@@ -37,7 +37,7 @@ void LightController_Destroy(void)
 	}
 }
 
-void LightController_On(int id)
+void LightController_TurnOn(int id)
 {
 	LightDriver driver = lightDrivers[id];
 	if (NULL == driver)
@@ -53,7 +53,7 @@ void LightController_On(int id)
 	}
 }
 
-void LightController_Off(int id)
+void LightController_TurnOff(int id)
 {
 	LightDriver driver = lightDrivers[id];
 	if (NULL == driver)
