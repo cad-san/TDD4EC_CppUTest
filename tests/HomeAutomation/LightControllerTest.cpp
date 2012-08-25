@@ -14,6 +14,8 @@ TEST_GROUP(LightController)
 	{
 		LightController_Create();
 		LightDriverSpy_AddSpiesToController();
+		LightDriverSpy_InstallInterface();
+		LightDriverSpy_Reset();
 	}
 	
 	void teardown()

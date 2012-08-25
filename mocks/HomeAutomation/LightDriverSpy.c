@@ -12,6 +12,12 @@ static int states[MAX_LIGHTS];
 static int lastId;
 static int lastState;
 
+static LightDriverInterfaceStruct interface = {
+	LightDriverSpy_TurnOn,
+	0,
+	0
+};
+
 static int isIdInRange(int id)
 {
     return id >= 0 && id <= MAX_LIGHTS - 1;
@@ -62,6 +68,11 @@ void LightDriverSpy_TurnOff(LightDriver super)
     if (self == NULL)
     	return;
     save(self->base.id, LIGHT_OFF);
+}
+
+void LightDriverSpy_InstallInterface(void)
+{
+	LightDriver_SetInterface(&interface);
 }
 
 void LightDriverSpy_Reset(void)
