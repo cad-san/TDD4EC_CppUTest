@@ -31,6 +31,7 @@ INCLUDE_DIRS =\
 	include/HomeAutomation\
 	include/HomeAutomation/devices\
 	include/LedDriver\
+	include/util\
 	mocks\
 
 MOCKS_SRC_DIRS = \

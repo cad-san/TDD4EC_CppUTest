@@ -1,9 +1,6 @@
 #include "LightDriver.h"
 #include "LightDriverPrivate.h"
-
-#ifndef BOOL
-#define BOOL int
-#endif
+#include "common.h"
 
 static LightDriverInterface interface = NULL;
 
