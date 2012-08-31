@@ -14,8 +14,8 @@ static int lastState;
 
 static LightDriverInterfaceStruct interface = {
 	LightDriverSpy_TurnOn,
-	0,
-	0
+	LightDriverSpy_TurnOff,
+	LightDriverSpy_Destroy
 };
 
 static int isIdInRange(int id)
@@ -93,4 +93,10 @@ int LightDriverSpy_GetState(int id)
 
 void LightDriverSpy_AddSpiesToController(void)
 {
+	int i;
+	for(i = 0; i < MAX_LIGHTS;i++)
+	{
+		LightDriver driver = (LightDriver) LightDriverSpy_Create(i);
+		LightController_Add(i, driver);
+	}
 }

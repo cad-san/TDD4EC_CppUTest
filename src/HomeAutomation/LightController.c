@@ -12,18 +12,7 @@ void LightController_Create(void)
 
 static void destroy(LightDriver driver)
 {
-	if (!driver)
-		return;
-	
-	switch (driver->type)
-	{
-	case X10:
-		X10LightDriver_Destroy(driver);
-		break;
-	default:
-		/* now what? */
-		break;
-	}
+	LightDriver_Destroy(driver);
 }
 
 void LightController_Destroy(void)
@@ -37,35 +26,26 @@ void LightController_Destroy(void)
 	}
 }
 
+BOOL LightController_Add(int id, LightDriver driver)
+{
+	if(id < 0 && id >= MAX_LIGHTS)
+		return FALSE;
+	
+	if(!driver)
+		return FALSE;
+		
+	destroy(lightDrivers[id]);
+
+	lightDrivers[id] = driver;
+	return TRUE;
+}
+
 void LightController_TurnOn(int id)
 {
-	LightDriver driver = lightDrivers[id];
-	if (NULL == driver)
-		return;
-		
-	switch (driver->type)
-	{
-	case X10:
-		X10LightDriver_TurnOn(driver);
-	default:
-		/* now what? */
-		break;
-	}
+	LightDriver_TurnOn(lightDrivers[id]);
 }
 
 void LightController_TurnOff(int id)
 {
-	LightDriver driver = lightDrivers[id];
-	if (NULL == driver)
-		return;
-		
-	switch (driver->type)
-	{
-	case X10:
-		X10LightDriver_TurnOff(driver);
-	default:
-		/* now what? */
-		break;
-	}
+	LightDriver_TurnOff(lightDrivers[id]);
 }
-

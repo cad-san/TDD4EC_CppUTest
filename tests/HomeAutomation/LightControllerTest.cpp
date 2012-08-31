@@ -23,3 +23,19 @@ TEST_GROUP(LightController)
 		LightController_Destroy();
 	}
 };
+
+TEST(LightController, CreateDestroy)
+{
+}
+
+TEST(LightController, TurnOn)
+{
+	LightController_TurnOn(7);
+	LONGS_EQUAL(LIGHT_ON, LightDriverSpy_GetState(7));
+}
+
+TEST(LightController, TurnOff)
+{
+    LightController_TurnOff(1);
+    LONGS_EQUAL(LIGHT_OFF, LightDriverSpy_GetState(1));
+}
