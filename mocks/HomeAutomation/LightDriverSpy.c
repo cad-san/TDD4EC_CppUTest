@@ -33,8 +33,7 @@ LightDriver LightDriverSpy_Create(int id)
     if (self == NULL)
     	return NULL;
 
-	self->base.type = TestLightDriver;
-	self->base.id = id;
+	self->base = LightDriver_Create(&interface, "TestLightDriver", id);
 	return (LightDriver)self;
 }
 
@@ -68,11 +67,6 @@ void LightDriverSpy_TurnOff(LightDriver super)
     if (self == NULL)
     	return;
     save(self->base.id, LIGHT_OFF);
-}
-
-void LightDriverSpy_InstallInterface(void)
-{
-	LightDriver_SetInterface(&interface);
 }
 
 void LightDriverSpy_Reset(void)

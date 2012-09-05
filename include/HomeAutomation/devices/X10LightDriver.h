@@ -10,7 +10,6 @@ typedef enum X10_HouseCode
 	X10_M, X10_N, X10_O, X10_P
 } X10_HouseCode;
 
-void X10LightDriver_InstallInterface(void);
 LightDriver X10LightDriver_Create(int id, X10_HouseCode code, int unit);
 void X10LightDriver_Destroy(LightDriver);
 void X10LightDriver_TurnOn(LightDriver);

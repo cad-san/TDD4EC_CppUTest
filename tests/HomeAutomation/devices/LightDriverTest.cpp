@@ -29,13 +29,13 @@ LightDriverInterfaceStruct interface =
 
 LightDriverStruct testDriver =
 {
-	TestLightDriver,
+	&interface,
+	"TestLightDriver",
 	13
 };
 
 TEST(LightDriver, NullDriverDoesNotCrash)
 {
-	LightDriver_SetInterface(&interface);
 	LightDriver_TurnOn(NULL);
 	LightDriver_TurnOff(NULL);
 	LightDriver_Destroy(NULL);

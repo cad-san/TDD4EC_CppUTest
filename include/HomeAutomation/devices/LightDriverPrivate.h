@@ -1,17 +1,12 @@
 #ifndef D_LightDriverPrivate_H
 #define D_LightDriverPrivate_H
 
-typedef enum LightDriverType
-{
-	TestLightDriver,
-	X10,
-	AcmeWireless,
-	MemoryMapped
-} LightDriverType;
+typedef struct LightDriverInterfaceStruct* LightDriverInterface;
 
 typedef struct LightDriverStruct
 {
-	LightDriverType type;
+	LightDriverInterface vtable;
+	const char* type;
 	int id;
 } LightDriverStruct;
 
@@ -21,5 +16,7 @@ typedef struct LightDriverInterfaceStruct
 	void (*TurnOff)(LightDriver);
 	void (*Destroy)(LightDriver);
 } LightDriverInterfaceStruct;
+
+LightDriverStruct LightDriver_Create(LightDriverInterface interface, const char* type, int id);
 
 #endif

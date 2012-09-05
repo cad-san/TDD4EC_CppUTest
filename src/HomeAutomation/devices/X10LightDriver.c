@@ -17,16 +17,10 @@ static LightDriverInterfaceStruct interface = {
 	X10LightDriver_Destroy
 };
 
-void X10LightDriver_InstallInterface(void)
-{
-	LightDriver_SetInterface(&interface);
-}
-
 LightDriver X10LightDriver_Create(int id, X10_HouseCode code, int unit)
 {
 	X10LightDriver self = calloc(1, sizeof(X10LightDriverStruct));
-	self->base.type = X10;
-	self->base.id = id;
+	self->base = LightDriver_Create(&interface, "X10LightDriver", id);
 	self->house = code;
 	self->unit = unit;
 	return (LightDriver)self;

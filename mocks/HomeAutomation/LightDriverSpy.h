@@ -9,7 +9,6 @@ void LightDriverSpy_TurnOn(LightDriver);
 void LightDriverSpy_TurnOff(LightDriver);
 
 /* Functions just needed by the spy */
-void LightDriverSpy_InstallInterface(void);
 void LightDriverSpy_Reset(void);
 int LightDriverSpy_GetState(int id);
 int LightDriverSpy_GetLastId(void);
