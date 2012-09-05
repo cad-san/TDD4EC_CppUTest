@@ -11,6 +11,17 @@ typedef struct X10LightDriverStruct
 	char message[MAX_X10_MESSAGE_LENGTH];
 } X10LightDriverStruct;
 
+static LightDriverInterfaceStruct interface = {
+	X10LightDriver_TurnOn,
+	X10LightDriver_TurnOff,
+	X10LightDriver_Destroy
+};
+
+void X10LightDriver_InstallInterface(void)
+{
+	LightDriver_SetInterface(&interface);
+}
+
 LightDriver X10LightDriver_Create(int id, X10_HouseCode code, int unit)
 {
 	X10LightDriver self = calloc(1, sizeof(X10LightDriverStruct));
