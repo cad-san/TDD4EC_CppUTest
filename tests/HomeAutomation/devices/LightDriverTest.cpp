@@ -16,28 +16,45 @@ TEST_GROUP(LightDriver)
 	}
 };
 
-#define NONSENSE_POINTER (LightDriver)~0
-static LightDriver savedDriver = NONSENSE_POINTER;
-static void shouldNotBeCalled(LightDriver self) { savedDriver = self; }
+static void null(LightDriver self) {}
 
-LightDriverInterfaceStruct interface =
+static LightDriverInterfaceStruct interface =
 {
-	shouldNotBeCalled,
-	shouldNotBeCalled,
-	shouldNotBeCalled
+	null,
+	null,
+	null
 };
 
-LightDriverStruct testDriver =
+static LightDriverStruct testDriver =
 {
 	&interface,
 	"TestLightDriver",
 	13
 };
 
-TEST(LightDriver, NullDriverDoesNotCrash)
+static LightDriverStruct nullInterfaceDriver =
+{
+	NULL,
+	"TestLightDriver",
+	13
+};
+
+TEST(LightDriver, NullDriverDoesNoHarm)
 {
 	LightDriver_TurnOn(NULL);
 	LightDriver_TurnOff(NULL);
 	LightDriver_Destroy(NULL);
-	POINTERS_EQUAL(NONSENSE_POINTER, savedDriver);
+}
+
+TEST(LightDriver, NullInterfaceDoesNoHarm)
+{
+	LightDriver_TurnOn(&nullInterfaceDriver);
+	LightDriver_TurnOff(&nullInterfaceDriver);
+	LightDriver_Destroy(&nullInterfaceDriver);
+}
+
+TEST(LightDriver, Accessors)
+{
+	LONGS_EQUAL(13, LightDriver_GetId(&testDriver));
+	STRCMP_EQUAL("TestLightDriver", LightDriver_GetType(&testDriver));
 }

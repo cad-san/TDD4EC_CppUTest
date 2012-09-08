@@ -33,3 +33,16 @@ void LightDriver_TurnOff(LightDriver self)
 	if(isValid(self))
 		self->vtable->TurnOff(self);
 }
+
+const char * LightDriver_GetType(LightDriver self)
+{
+	if(!isValid(self))
+		return NULL;
+	return self->type;
+}
+int LightDriver_GetId(LightDriver self)
+{
+	if(!isValid(self))
+		return -1;
+	return self->id;
+}
