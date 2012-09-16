@@ -8,6 +8,10 @@ typedef struct CountingLightDriverStruct
 	int counter;
 } CountingLightDriverStruct;
 
+void CountingLightDriver_Destroy(LightDriver base);
+void CountingLightDriver_TurnOn(LightDriver base);
+void CountingLightDriver_TurnOff(LightDriver base);
+
 static LightDriverInterfaceStruct interface = {
 	CountingLightDriver_TurnOn,
 	CountingLightDriver_TurnOff,

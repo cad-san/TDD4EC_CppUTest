@@ -11,6 +11,10 @@ typedef struct X10LightDriverStruct
 	char message[MAX_X10_MESSAGE_LENGTH];
 } X10LightDriverStruct;
 
+void X10LightDriver_Destroy(LightDriver);
+void X10LightDriver_TurnOn(LightDriver);
+void X10LightDriver_TurnOff(LightDriver);
+
 static LightDriverInterfaceStruct interface = {
 	X10LightDriver_TurnOn,
 	X10LightDriver_TurnOff,
